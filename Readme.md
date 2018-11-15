@@ -1,3 +1,11 @@
+<!-- default file list -->
+*Files to look at*:
+
+* [MainWindow.xaml](./CS/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/MainWindow.xaml))
+* [MainWindow.xaml.cs](./CS/MainWindow.xaml.cs) (VB: [MainWindow.xaml](./VB/MainWindow.xaml))
+* [SchedulerModel.cs](./CS/SchedulerModel.cs) (VB: [SchedulerModel.vb](./VB/SchedulerModel.vb))
+* [SchedulerViewModel.cs](./CS/SchedulerViewModel.cs) (VB: [SchedulerViewModel.vb](./VB/SchedulerViewModel.vb))
+<!-- default file list end -->
 # How to bind the SchedulerControl to the ObservableCollection using the MVVM pattern
 
 

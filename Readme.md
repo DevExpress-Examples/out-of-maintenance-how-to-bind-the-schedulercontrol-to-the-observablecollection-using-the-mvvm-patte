@@ -2,7 +2,7 @@
 *Files to look at*:
 
 * [MainWindow.xaml](./CS/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/MainWindow.xaml))
-* [MainWindow.xaml.cs](./CS/MainWindow.xaml.cs) (VB: [MainWindow.xaml](./VB/MainWindow.xaml))
+* [MainWindow.xaml.cs](./CS/MainWindow.xaml.cs) (VB: [MainWindow.xaml.vb](./VB/MainWindow.xaml.vb))
 * [SchedulerModel.cs](./CS/SchedulerModel.cs) (VB: [SchedulerModel.vb](./VB/SchedulerModel.vb))
 * [SchedulerViewModel.cs](./CS/SchedulerViewModel.cs) (VB: [SchedulerViewModel.vb](./VB/SchedulerViewModel.vb))
 <!-- default file list end -->

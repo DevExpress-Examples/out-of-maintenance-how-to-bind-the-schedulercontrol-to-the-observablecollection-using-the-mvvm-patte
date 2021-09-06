@@ -16,8 +16,8 @@ namespace SchedulerBindToObservableCollectionWpf {
             Appointments = new ObservableCollection<ModelAppointment>();
             Resources = new ObservableCollection<ModelResource>();
 
-            AddNewAppointmentCommand = new DevExpress.Xpf.Mvvm.DelegateCommand<object>(AddNewAppointmentCommandExecute);
-            GetSourceObjectCommand = new DevExpress.Xpf.Mvvm.DelegateCommand<object>(GetSourceObjectCommandExecute);
+            AddNewAppointmentCommand = new DevExpress.Mvvm.DelegateCommand<object>(AddNewAppointmentCommandExecute);
+            GetSourceObjectCommand = new DevExpress.Mvvm.DelegateCommand<object>(GetSourceObjectCommandExecute);
 
             AddTestData();
         }

@@ -49,8 +49,8 @@ Namespace SchedulerBindToObservableCollectionWpf
 			Appointments = New ObservableCollection(Of ModelAppointment)()
 			Resources = New ObservableCollection(Of ModelResource)()
 
-			AddNewAppointmentCommand = New DevExpress.Xpf.Mvvm.DelegateCommand(Of Object)(AddressOf AddNewAppointmentCommandExecute)
-			GetSourceObjectCommand = New DevExpress.Xpf.Mvvm.DelegateCommand(Of Object)(AddressOf GetSourceObjectCommandExecute)
+			AddNewAppointmentCommand = New DevExpress.Mvvm.DelegateCommand(Of Object)(AddressOf AddNewAppointmentCommandExecute)
+			GetSourceObjectCommand = New DevExpress.Mvvm.DelegateCommand(Of Object)(AddressOf GetSourceObjectCommandExecute)
 
 			AddTestData()
 		End Sub

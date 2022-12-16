@@ -1,101 +1,92 @@
-﻿Imports Microsoft.VisualBasic
-Imports System
 Imports System.Windows
 Imports System.Windows.Input
-Imports DevExpress.Xpf.Core.Commands
 Imports System.Collections.ObjectModel
 
 Namespace SchedulerBindToObservableCollectionWpf
-	Public Class SchedulerViewModel
-		Private privateAppointments As ObservableCollection(Of ModelAppointment)
-		Public Property Appointments() As ObservableCollection(Of ModelAppointment)
-			Get
-				Return privateAppointments
-			End Get
-			Private Set(ByVal value As ObservableCollection(Of ModelAppointment))
-				privateAppointments = value
-			End Set
-		End Property
-		Private privateResources As ObservableCollection(Of ModelResource)
-		Public Property Resources() As ObservableCollection(Of ModelResource)
-			Get
-				Return privateResources
-			End Get
-			Private Set(ByVal value As ObservableCollection(Of ModelResource))
-				privateResources = value
-			End Set
-		End Property
 
-		Private privateAddNewAppointmentCommand As ICommand
-		Public Property AddNewAppointmentCommand() As ICommand
-			Get
-				Return privateAddNewAppointmentCommand
-			End Get
-			Private Set(ByVal value As ICommand)
-				privateAddNewAppointmentCommand = value
-			End Set
-		End Property
-		Private privateGetSourceObjectCommand As ICommand
-		Public Property GetSourceObjectCommand() As ICommand
-			Get
-				Return privateGetSourceObjectCommand
-			End Get
-			Private Set(ByVal value As ICommand)
-				privateGetSourceObjectCommand = value
-			End Set
-		End Property
+    Public Class SchedulerViewModel
 
-		Public Sub New()
-			Appointments = New ObservableCollection(Of ModelAppointment)()
-			Resources = New ObservableCollection(Of ModelResource)()
+        Private _Appointments As ObservableCollection(Of SchedulerBindToObservableCollectionWpf.ModelAppointment), _Resources As ObservableCollection(Of SchedulerBindToObservableCollectionWpf.ModelResource), _AddNewAppointmentCommand As ICommand, _GetSourceObjectCommand As ICommand
 
-			AddNewAppointmentCommand = New DevExpress.Mvvm.DelegateCommand(Of Object)(AddressOf AddNewAppointmentCommandExecute)
-			GetSourceObjectCommand = New DevExpress.Mvvm.DelegateCommand(Of Object)(AddressOf GetSourceObjectCommandExecute)
+        Public Property Appointments As ObservableCollection(Of ModelAppointment)
+            Get
+                Return _Appointments
+            End Get
 
-			AddTestData()
-		End Sub
+            Private Set(ByVal value As ObservableCollection(Of ModelAppointment))
+                _Appointments = value
+            End Set
+        End Property
 
-		Private Sub AddNewAppointmentCommandExecute(ByVal parameter As Object)
-			Dim baseTime As DateTime = DateTime.Today
+        Public Property Resources As ObservableCollection(Of ModelResource)
+            Get
+                Return _Resources
+            End Get
 
-			Dim apt As New ModelAppointment() With {.StartTime = baseTime.AddHours(3), .EndTime = baseTime.AddHours(4), .Subject = "Test3", .Location = "Office", .Description = "Test procedure", .Price = 20D}
+            Private Set(ByVal value As ObservableCollection(Of ModelResource))
+                _Resources = value
+            End Set
+        End Property
 
-			Appointments.Add(apt)
-		End Sub
+        Public Property AddNewAppointmentCommand As ICommand
+            Get
+                Return _AddNewAppointmentCommand
+            End Get
 
-		Private Sub GetSourceObjectCommandExecute(ByVal parameter As Object)
-			Dim storage As DevExpress.Xpf.Scheduler.SchedulerStorage = CType(parameter, DevExpress.Xpf.Scheduler.SchedulerStorage)
+            Private Set(ByVal value As ICommand)
+                _AddNewAppointmentCommand = value
+            End Set
+        End Property
 
-			If storage.AppointmentStorage.Count > 0 Then
-				Dim apt As ModelAppointment = CType(storage.AppointmentStorage(0).GetSourceObject(storage.GetCoreStorage()), ModelAppointment)
-				' Alternative: ModelAppointment apt = (ModelAppointment)storage.GetObjectRow(storage.AppointmentStorage[0]);
-				MessageBox.Show("First Appointment Price: " & apt.Price.ToString())
-			End If
-		End Sub
+        Public Property GetSourceObjectCommand As ICommand
+            Get
+                Return _GetSourceObjectCommand
+            End Get
 
-		Private Sub AddTestData()
-			Dim res1 As New ModelResource() With {.Id = 0, .Name = "Computer1", .Color = ToRgb(System.Drawing.Color.Yellow)}
+            Private Set(ByVal value As ICommand)
+                _GetSourceObjectCommand = value
+            End Set
+        End Property
 
-			Dim res2 As New ModelResource() With {.Id = 1, .Name = "Computer2", .Color = ToRgb(System.Drawing.Color.Green)}
+        Public Sub New()
+            Appointments = New ObservableCollection(Of ModelAppointment)()
+            Resources = New ObservableCollection(Of ModelResource)()
+            AddNewAppointmentCommand = New DevExpress.Mvvm.DelegateCommand(Of Object)(AddressOf AddNewAppointmentCommandExecute)
+            GetSourceObjectCommand = New DevExpress.Mvvm.DelegateCommand(Of Object)(AddressOf GetSourceObjectCommandExecute)
+            AddTestData()
+        End Sub
 
-			Dim res3 As New ModelResource() With {.Id = 2, .Name = "Computer3", .Color = ToRgb(System.Drawing.Color.Blue)}
+        Private Sub AddNewAppointmentCommandExecute(ByVal parameter As Object)
+            Dim baseTime As Date = Date.Today
+            Dim apt As ModelAppointment = New ModelAppointment() With {.StartTime = baseTime.AddHours(3), .EndTime = baseTime.AddHours(4), .Subject = "Test3", .Location = "Office", .Description = "Test procedure", .Price = 20D}
+            Appointments.Add(apt)
+        End Sub
 
-			Resources.Add(res1)
-			Resources.Add(res2)
-			Resources.Add(res3)
+        Private Sub GetSourceObjectCommandExecute(ByVal parameter As Object)
+            Dim storage As DevExpress.Xpf.Scheduler.SchedulerStorage = CType(parameter, DevExpress.Xpf.Scheduler.SchedulerStorage)
+            If storage.AppointmentStorage.Count > 0 Then
+                Dim apt As ModelAppointment = CType(storage.AppointmentStorage(0).GetSourceObject(storage.GetCoreStorage()), ModelAppointment)
+                ' Alternative: ModelAppointment apt = (ModelAppointment)storage.GetObjectRow(storage.AppointmentStorage[0]);
+                Call MessageBox.Show("First Appointment Price: " & apt.Price.ToString())
+            End If
+        End Sub
 
-			Dim baseTime As DateTime = DateTime.Today
+        Private Sub AddTestData()
+            Dim res1 As ModelResource = New ModelResource() With {.Id = 0, .Name = "Computer1", .Color = ToRgb(System.Drawing.Color.Yellow)}
+            Dim res2 As ModelResource = New ModelResource() With {.Id = 1, .Name = "Computer2", .Color = ToRgb(System.Drawing.Color.Green)}
+            Dim res3 As ModelResource = New ModelResource() With {.Id = 2, .Name = "Computer3", .Color = ToRgb(System.Drawing.Color.Blue)}
+            Resources.Add(res1)
+            Resources.Add(res2)
+            Resources.Add(res3)
+            Dim baseTime As Date = Date.Today
+            Dim apt1 As ModelAppointment = New ModelAppointment() With {.StartTime = baseTime.AddHours(1), .EndTime = baseTime.AddHours(2), .Subject = "Test", .Location = "Office", .Description = "Test procedure", .Price = 10D}
+            Dim apt2 As ModelAppointment = New ModelAppointment() With {.StartTime = baseTime.AddHours(2), .EndTime = baseTime.AddHours(3), .Subject = "Test2", .Location = "Office", .Description = "Test procedure", .ResourceId = "<ResourceIds>" & Microsoft.VisualBasic.Constants.vbCrLf & "<ResourceId Type=""System.Int32"" Value=""0"" />" & Microsoft.VisualBasic.Constants.vbCrLf & "<ResourceId Type=""System.Int32"" Value=""1"" />" & Microsoft.VisualBasic.Constants.vbCrLf & "</ResourceIds>"}
+            Appointments.Add(apt1)
+            Appointments.Add(apt2)
+        End Sub
 
-			Dim apt1 As New ModelAppointment() With {.StartTime = baseTime.AddHours(1), .EndTime = baseTime.AddHours(2), .Subject = "Test", .Location = "Office", .Description = "Test procedure", .Price = 10D}
-
-			Dim apt2 As New ModelAppointment() With {.StartTime = baseTime.AddHours(2), .EndTime = baseTime.AddHours(3), .Subject = "Test2", .Location = "Office", .Description = "Test procedure", .ResourceId = "<ResourceIds>" & Constants.vbCrLf & "<ResourceId Type=""System.Int32"" Value=""0"" />" & Constants.vbCrLf & "<ResourceId Type=""System.Int32"" Value=""1"" />" & Constants.vbCrLf & "</ResourceIds>"}
-
-			Appointments.Add(apt1)
-			Appointments.Add(apt2)
-		End Sub
-
-		Private Function ToRgb(ByVal color As System.Drawing.Color) As Integer
-			Return color.B << 16 Or color.G << 8 Or color.R
-		End Function
-	End Class
+        Private Function ToRgb(ByVal color As System.Drawing.Color) As Integer
+            Return color.B << 16 Or color.G << 8 Or color.R
+        End Function
+    End Class
 End Namespace
